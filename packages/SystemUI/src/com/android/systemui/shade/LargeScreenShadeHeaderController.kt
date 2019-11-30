@@ -34,6 +34,9 @@ import com.android.systemui.R
 import com.android.systemui.animation.Interpolators
 import com.android.systemui.animation.ShadeInterpolation
 import com.android.systemui.battery.BatteryMeterView
+import com.android.systemui.battery.BatteryMeterView.BATTERY_STYLE_CIRCLE
+import com.android.systemui.battery.BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE
+import com.android.systemui.battery.BatteryMeterView.BATTERY_STYLE_FULL_CIRCLE
 import com.android.systemui.battery.BatteryMeterViewController
 import com.android.systemui.demomode.DemoMode
 import com.android.systemui.demomode.DemoModeController
@@ -63,6 +66,8 @@ import com.android.systemui.util.ViewController
 import java.io.PrintWriter
 import javax.inject.Inject
 import javax.inject.Named
+
+import kotlin.math.roundToInt
 
 /**
  * Controller for QS header on Large Screen width (large screen + landscape).
@@ -268,7 +273,6 @@ class LargeScreenShadeHeaderController @Inject constructor(
         batteryMeterViewController.init()
 
         // battery settings same as in QS icons
-        batteryMeterViewController.ignoreTunerUpdates()
         batteryIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE)
 
         iconManager = tintedIconManagerFactory.create(iconContainer, StatusBarLocation.QS)
@@ -487,6 +491,14 @@ class LargeScreenShadeHeaderController @Inject constructor(
         val padding = resources.getDimensionPixelSize(R.dimen.qs_panel_padding)
         header.setPadding(padding, header.paddingTop, padding, header.paddingBottom)
         updateQQSPaddings()
+    }
+
+    private fun reduceColorAlpha(color: Int, factor: Float): Int {
+        val a: Int = (Color.alpha(color) * factor).roundToInt()
+        val r: Int = Color.red(color)
+        val g: Int = Color.green(color)
+        val b: Int = Color.blue(color)
+        return Color.argb(a, r, g, b)
     }
 
     private fun updateQQSPaddings() {
