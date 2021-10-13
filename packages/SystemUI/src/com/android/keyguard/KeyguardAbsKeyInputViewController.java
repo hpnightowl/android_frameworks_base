@@ -179,6 +179,9 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
                 mLockPatternUtils.setPinPasswordLength(mView.getEnteredCredential().size(), userId);
             }
             mLockPatternUtils.sanitizePassword();
+            if (mLockPatternUtils.getPinPasswordLength(userId) == -1) {
+                mLockPatternUtils.setPinPasswordLength(mView.getEnteredCredential().size(), userId);
+            }
             getKeyguardSecurityCallback().reportUnlockAttempt(userId, true, 0);
             if (dismissKeyguard) {
                 mDismissing = true;
