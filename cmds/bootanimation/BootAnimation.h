@@ -91,9 +91,9 @@ public:
             int audioLength;
             Animation* animation;
             // Controls if dynamic coloring is enabled for this part.
-            bool useDynamicColoring = false;
+            bool useDynamicColoring = true;
             // Defines if this part is played after the dynamic coloring part.
-            bool postDynamicColoring = false;
+            bool postDynamicColoring = true;
 
             bool hasFadingPhase() const {
                 return !playUntilComplete && framesToFadeCount > 0;
@@ -110,7 +110,7 @@ public:
         Font clockFont;
         Font progressFont;
          // Controls if dynamic coloring is enabled for the whole animation.
-        bool dynamicColoringEnabled = false;
+        bool dynamicColoringEnabled = true;
         int colorTransitionStart = 0; // Start frame of dynamic color transition.
         int colorTransitionEnd = 0; // End frame of dynamic color transition.
         float startColors[4][3]; // Start colors of dynamic color transition.
