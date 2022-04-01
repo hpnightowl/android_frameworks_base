@@ -123,6 +123,7 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
             refreshAllTiles();
         }
         mView.addOnConfigurationChangedListener(mOnConfigurationChangedListener);
+        mView.updateColumns();
         mBrightnessMirrorHandler.onQsPanelAttached();
     }
 
@@ -152,12 +153,14 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
 
     private void setMaxTiles(int parseNumTiles) {
         mView.setMaxTiles(parseNumTiles);
+        mView.updateColumns();
         setTiles();
     }
 
     @Override
     protected void onConfigurationChanged() {
         updateMediaExpansion();
+        mView.updateColumns();
     }
 
     @Override

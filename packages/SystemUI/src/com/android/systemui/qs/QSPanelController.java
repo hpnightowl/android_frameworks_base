@@ -68,6 +68,7 @@ public class QSPanelController extends QSPanelControllerBase<QSPanel> {
         @Override
         public void onConfigurationChange(Configuration newConfig) {
             mView.updateResources();
+            mView.updateColumns();
             if (mView.isListening()) {
                 refreshAllTiles();
             }
@@ -134,6 +135,7 @@ public class QSPanelController extends QSPanelControllerBase<QSPanel> {
         }
         mView.addOnConfigurationChangedListener(mOnConfigurationChangedListener);
         switchTileLayout(true);
+        mView.updateColumns();
         mBrightnessMirrorHandler.onQsPanelAttached();
 
         ((PagedTileLayout) mView.getOrCreateTileLayout())
