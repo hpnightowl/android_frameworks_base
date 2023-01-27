@@ -84,7 +84,7 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
         mBrightnessSliderController = brightnessSliderFactory.create(getContext(), mView);
         mView.setBrightnessView(mBrightnessSliderController.getRootView());
         mBrightnessController = brightnessControllerFactory.create(
-                mBrightnessSliderController.getIconView(), mBrightnessSliderController);
+		mBrightnessSliderController.getIconView(), mBrightnessSliderController);
         mBrightnessMirrorHandler = new BrightnessMirrorHandler(mBrightnessController);
         mUsingCollapsedLandscapeMedia = usingCollapsedLandscapeMedia;
     }
