@@ -423,7 +423,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
                     R.drawable.ic_qs_brightness_auto_on :
                     R.drawable.ic_qs_brightness_auto_off);
             mIcon.setBackgroundResource(automatic ?
-                    R.drawable.bg_qs_brightness_auto_on :
+                    R.drawable.bg_qs_brightness_auto_on_sq :
                     R.drawable.bg_qs_brightness_auto_off);
         }
     }

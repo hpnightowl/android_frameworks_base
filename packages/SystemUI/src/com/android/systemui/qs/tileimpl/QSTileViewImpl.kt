@@ -533,7 +533,6 @@ open class QSTileViewImpl @JvmOverloads constructor(
                                 chevronView.imageTintList?.defaultColor ?: 0,
                                 getChevronColorForState(state.state)
                         )
-                    )
                 )
                 tileAnimator.start()
             } else {
@@ -620,11 +619,11 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     private fun getCornerRadiusForState(state: Int): Float {
-        return when (state) {
-            Tile.STATE_ACTIVE -> radiusActive
-            Tile.STATE_INACTIVE -> radiusInactive
-            Tile.STATE_UNAVAILABLE -> radiusInactive
-            else -> radiusInactive
+       return when (state) {
+            Tile.STATE_ACTIVE -> radiusInactive
+            Tile.STATE_INACTIVE -> radiusActive
+            Tile.STATE_UNAVAILABLE -> radiusActive
+            else -> radiusActive
         }
     }
 
