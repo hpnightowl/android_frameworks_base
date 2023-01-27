@@ -217,7 +217,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
             ignoreLastView = collapsed
             forceUnspecifiedMeasure = collapsed
         }
-        secondaryLabel.alpha = if (collapsed) 0f else 1f
+        secondaryLabel.alpha = 1f
 
         val iconContainerSize = context.resources.getDimensionPixelSize(R.dimen.qs_quick_tile_size)
 
