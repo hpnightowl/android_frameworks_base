@@ -63,6 +63,8 @@ class FooterActionsControllerTest : LeakCheckedTest() {
     @Mock
     private lateinit var multiUserSwitchControllerFactory: MultiUserSwitchController.Factory
     @Mock
+    private lateinit var qsPanelController: QSPanelController
+    @Mock
     private lateinit var multiUserSwitchController: MultiUserSwitchController
     @Mock
     private lateinit var globalActionsDialogProvider: Provider<GlobalActionsDialogLite>
@@ -316,7 +318,7 @@ class FooterActionsControllerTest : LeakCheckedTest() {
     }
 
     private fun constructFooterActionsController(view: FooterActionsView): FooterActionsController {
-        return FooterActionsController(view, multiUserSwitchControllerFactory,
+        return FooterActionsController(view, qsPanelController,  multiUserSwitchControllerFactory,
                 activityStarter, userManager, userTracker, userInfoController,
                 deviceProvisionedController, securityFooterController, fgsManagerController,
                 falsingManager, metricsLogger, globalActionsDialogProvider, uiEventLogger,

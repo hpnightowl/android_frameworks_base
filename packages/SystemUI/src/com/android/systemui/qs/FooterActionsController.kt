@@ -56,6 +56,7 @@ import javax.inject.Provider
 internal class FooterActionsController @Inject constructor(
     view: FooterActionsView,
     multiUserSwitchControllerFactory: MultiUserSwitchController.Factory,
+    private val qsPanelController: QSPanelController,
     private val activityStarter: ActivityStarter,
     private val userManager: UserManager,
     private val userTracker: UserTracker,
@@ -93,6 +94,7 @@ internal class FooterActionsController @Inject constructor(
         view.findViewById(R.id.security_footers_container)
     private val powerMenuLite: View = view.findViewById(R.id.pm_lite)
     private val multiUserSwitchController = multiUserSwitchControllerFactory.create(view)
+    private val editButton: View = view.findViewById(android.R.id.edit)
 
     @VisibleForTesting
     internal val securityFootersSeparator = View(context).apply {
@@ -165,6 +167,12 @@ internal class FooterActionsController @Inject constructor(
             powerMenuLite.visibility = View.GONE
         }
         settingsButtonContainer.setOnClickListener(onClickListener)
+        editButton.setOnClickListener(View.OnClickListener { view: View? ->
+            if (falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
+                return@OnClickListener
+            }
+            activityStarter.postQSRunnableDismissingKeyguard { qsPanelController.showEdit(view) }
+        })
         multiUserSetting.isListening = true
 
         val securityFooter = securityFooterController.view
