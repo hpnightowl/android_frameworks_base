@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.LinearLayout;
 
@@ -57,6 +58,20 @@ public class QuickQSPanel extends QSPanel {
         mMaxColumnsPortrait = getResources().getInteger(R.integer.quick_qs_panel_num_columns);
         mMaxColumnsLandscape = getResources().getInteger(R.integer.quick_qs_panel_num_columns_landscape);
         mMaxColumnsMediaPlayer = getResources().getInteger(R.integer.quick_qs_panel_num_columns_media);
+    }
+
+    @Override
+    public void setBrightnessView(@NonNull View view) {
+        if (mBrightnessView != null) {
+            removeView(mBrightnessView);
+        }
+        mBrightnessView = view;
+        ViewGroup brightnessViewContainer = findViewById(R.id.qs_brightness_dialog);
+        if (brightnessViewContainer.indexOfChild(view) > -1) {
+            brightnessViewContainer.removeView(view);
+        }
+        brightnessViewContainer.addView(view);
+        setBrightnessViewMargin();
     }
 
     @Override

@@ -183,15 +183,20 @@ public class QSPanel extends LinearLayout implements Tunable {
             removeView(mBrightnessView);
             mMovableContentStartIndex--;
         }
-        addView(view, 0);
         mBrightnessView = view;
+
+        ViewGroup brightnessViewContainer = findViewById(R.id.qs_brightness_dialog);
+        if (brightnessViewContainer.indexOfChild(view) > -1) {
+            brightnessViewContainer.removeView(view);
+        }
+        brightnessViewContainer.addView(view);
 
         setBrightnessViewMargin();
 
         mMovableContentStartIndex++;
     }
 
-    private void setBrightnessViewMargin() {
+    protected void setBrightnessViewMargin() {
         if (mBrightnessView != null) {
             MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
             lp.topMargin = mContext.getResources()
@@ -317,6 +322,10 @@ public class QSPanel extends LinearLayout implements Tunable {
         }
     }
 
+
+    private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
+        view.setVisibility(TunerService.parseIntegerSwitch(newValue, true) ? VISIBLE : GONE);
+    }
 
     @Nullable
     View getBrightnessView() {
