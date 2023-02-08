@@ -147,7 +147,7 @@ public class LocationTile extends QSTileImpl<BooleanState> {
                 state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_gps_only);
                 state.label = mContext.getString(R.string.quick_settings_location_label);
                 state.secondaryLabel = mContext.getString(R.string.quick_settings_location_secondary_gps_only);
-                state.icon = mIcon;
+                state.icon = ResourceIcon.get(R.drawable.qs_location_icon_on);
                 state.state = Tile.STATE_ACTIVE;
                 break;
             case HIGH_ACCURACY:
@@ -163,7 +163,7 @@ public class LocationTile extends QSTileImpl<BooleanState> {
                 state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_off);
                 state.label = mContext.getString(R.string.quick_settings_location_label);
                 state.secondaryLabel = mContext.getString(R.string.quick_settings_secondary_location_off);
-                state.icon = mIcon;
+                state.icon = ResourceIcon.get(R.drawable.qs_location_icon_off);
                 state.state = Tile.STATE_INACTIVE;
                 break;
         }
