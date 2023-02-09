@@ -415,31 +415,6 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                     }
                 },
                 UserHandle.USER_ALL);
-        mSecureSettings.registerContentObserverForUser(
-                Settings.Secure.getUriFor(Settings.Secure.SYSTEM_BLACK_THEME),
-                false,
-                new ContentObserver(mBgHandler) {
-                    @Override
-                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
-                            int userId) {
-                        if (DEBUG) Log.d(TAG, "Overlay changed for user: " + userId);
-                        if (mUserTracker.getUserId() != userId) {
-                            return;
-                        }
-                        if (!mDeviceProvisionedController.isUserSetup(userId)) {
-                            Log.i(TAG, "Theme application deferred when setting changed.");
-                            mDeferredThemeEvaluation = true;
-                            return;
-                        }
-                        if (mSkipSettingChange) {
-                            if (DEBUG) Log.d(TAG, "Skipping setting change");
-                            mSkipSettingChange = false;
-                            return;
-                        }
-                        reevaluateSystemTheme(true /* forceReload */);
-                    }
-                },
-                UserHandle.USER_ALL);
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.BERRY_BLACK_THEME),
@@ -699,14 +674,6 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                     .map(key -> key + " -> " + categoryToPackage.get(key)).collect(
                             Collectors.joining(", ")));
         }
-
-        boolean nightMode = (mContext.getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-        boolean isBlackTheme = mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1
-                                && nightMode;
-
-        mThemeManager.setIsBlackTheme(isBlackTheme);
-
         if (mNeedsOverlayCreation) {
             mNeedsOverlayCreation = false;
             mThemeManager.applyCurrentUserOverlays(categoryToPackage, new FabricatedOverlay[]{
@@ -716,8 +683,6 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
             mThemeManager.applyCurrentUserOverlays(categoryToPackage, null, currentUser,
                     managedProfiles);
         }
-
-        mThemeManager.applyBlackTheme(isBlackTheme);
     }
 
     private Style fetchThemeStyleFromSetting() {
